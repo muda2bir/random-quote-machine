@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Quote from "./components/Quote";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [items, setItems] = useState([]);
+  const [text, setText] = useState(
+    "When performance exceeds ambition, the overlap is called success."
+  );
+  const [author, setAuthor] = useState("Cullen Hightower");
+
+  const apiURL = `https://type.fit/api/quotes`;
+
+  function newQuote() {
+    let randomNumber = Math.floor(Math.random() * items.length);
+    setText(items[randomNumber].text);
+    setAuthor(items[randomNumber].author);
+  }
+
+  async function fetchQuotes(url) {
+    const response = await fetch(url);
+    const result = await response.json();
+    setItems(result);
+    setItems(result);
+  }
+
+  useEffect(() => {
+    fetchQuotes(apiURL);
+  }, [apiURL]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Quote text={text} author={author} newQuote={newQuote} />
     </div>
   );
 }
