@@ -9,7 +9,7 @@ function App() {
   );
   const [author, setAuthor] = useState("Cullen Hightower");
 
-  const apiURL = `https://type.fit/api/quotes`;
+  const apiURL = process.env.REACT_APP_API_LINK;
 
   function newQuote() {
     let randomNumber = Math.floor(Math.random() * items.length);
